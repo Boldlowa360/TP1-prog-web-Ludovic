@@ -16,7 +16,8 @@ export class AppComponent {
   result : boolean = false;
   artist : string = "";
   artistAlbum: album[]= [];
-
+  chansons: string[] = [];
+  albumAffiche: string ="";
   // ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
   // Le constructeur devra être ajouté ici
   // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
@@ -36,6 +37,15 @@ export class AppComponent {
     // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 
   }
+  async infoAlbum(nom:string): Promise<void>{
+    this.chansons=[];
+    let y = await lastValueFrom(this.http.get<any>("https://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=9a8a3facebbccaf363bb9fd68fa37abf&artist="+this.artist+"&album="+nom+"&format=json"))
+    console.log(y);
+    for(let c of y.album.tracks.track){
+      this.chansons.push(c.name)
+    }
+    this.albumAffiche = nom;
+    }
 
   newSearch():void{
     this.artistAlbum = [];

@@ -13,20 +13,28 @@
         <input type="submit" value="Nouvelle recherche">
       </form>
     </div>
-    <div class="col artists">
+    <div class="col artists" >
         <h2>Résultats</h2>
         <div *ngIf="result">
 		  <!-- L'affichage des artistes similaires sera ici 😩 -->
       <h3>Les albums de {{artist}}</h3>
-      <div *ngFor="let a of artistAlbum">
-        {{a.nom}}
-        <br>
-        <img src="{{a.image}}" alt="image de {{a.nom}}">
-        <br>
-        <br>
-        <br>
-      </div>
-		</div>
+        <div *ngFor="let a of artistAlbum" (click)="infoAlbum(a.nom)">
+          <p >{{a.nom}}</p>
+          <br>
+          <img src="{{a.image}}" alt="image de {{a.nom}}">
+          <br>
+          <br>
+          <br>
+          <div *ngIf="a.nom == albumAffiche">
+            <h3>chansons de l'album</h3>
+            <br>
+            <p *ngFor="let c of chansons">
+              {{c}}
+            </p>
+        </div>
+        </div>
+        
+		  </div>
     </div>
   </div>
 </div>
