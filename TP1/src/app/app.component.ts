@@ -28,9 +28,9 @@ export class AppComponent {
 	
     let x = await lastValueFrom(this.http.get<any>("https://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist="+this.artist+"&api_key=9a8a3facebbccaf363bb9fd68fa37abf&format=json"));
     console.log(x);
-    for(let i =0; i < x.topalbums.albums.length;i++){
-      this.artistAlbum.push(new album(x.topalbums.albums[i].name,x.topalbums.albums[i].image[1]["#text"]));
-    }
+    for(let a of x.topalbums.album){
+      this.artistAlbum.push(new album(a.name,a.image[3]["#text"]));
+  }
     // ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 	  // La requête HTTP devra être ajoutée ici
     // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
@@ -38,6 +38,7 @@ export class AppComponent {
   }
 
   newSearch():void{
+    this.artistAlbum = [];
     this.result = false;
   }
 }
